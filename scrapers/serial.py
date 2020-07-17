@@ -5,9 +5,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = "http://zfj.mee.gov.cn/jgjs/"
 
-DEST_DIR = './downloads/'
 
 
 def PAGE_URLS():
