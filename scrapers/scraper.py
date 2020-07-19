@@ -1,4 +1,5 @@
 import os
+import time
 
 from config import BASE_URL, DEST_DIR
 import requests
@@ -11,11 +12,26 @@ def get_pdf(pdf_link):
 
 
 def save_pdf(pdf, file_name):
-    path = os.path.join(DEST_DIR, file_name + '.pdf')
+    path = ''
+    if '环境卫星' in file_name:
+        path += '/环境卫星'
+    elif '气象卫星' in file_name:
+        path += '/气象卫星'
+    else:
+        return
+    
+    if '日报' in file_name:
+        path += '/日报'
+    elif '月报' in file_name:
+        path += '/月报'
+    else:
+        return
+    
+    path = os.path.join(DEST_DIR + path, file_name + '.pdf')
     with open(path, 'wb') as fp:
         fp.write(pdf)
-
-
+ 
+ 
 def is_pdf_tag(tag):
     try:
         return tag['href'].endswith('pdf')
@@ -38,3 +54,13 @@ def download_single_page(page_url):
         pdf = get_pdf(pdf_link)
         save_pdf(pdf, pdf_name)
     print(f"page {page_url} downloaded!")
+    
+
+def timer(f):
+    def decorated(*args, **kwargs):
+        t0 = time.time()
+        count = f(*args, **kwargs)
+        elapsed = time.time() - t0
+        msg = "\n{} pages downloaded in {:.2f}s"
+        print(msg.format(count, elapsed))
+    return decorated
