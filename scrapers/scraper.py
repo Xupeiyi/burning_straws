@@ -1,7 +1,6 @@
 import os
-import time
 
-from config import BASE_URL, DEST_DIR
+from scrapers.config import BASE_URL, DEST_DIR
 import requests
 from bs4 import BeautifulSoup
 
@@ -48,6 +47,8 @@ def get_pdf_links_and_names(url):
     return pdf_links_and_names
 
 
+
+
 def download_single_page(page_url):
     pdf_links_and_names = get_pdf_links_and_names(page_url)
     for pdf_link, pdf_name in pdf_links_and_names:
@@ -56,11 +57,3 @@ def download_single_page(page_url):
     print(f"page {page_url} downloaded!")
     
 
-def timer(f):
-    def decorated(*args, **kwargs):
-        t0 = time.time()
-        count = f(*args, **kwargs)
-        elapsed = time.time() - t0
-        msg = "\n{} pages downloaded in {:.2f}s"
-        print(msg.format(count, elapsed))
-    return decorated

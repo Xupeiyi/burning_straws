@@ -1,7 +1,8 @@
 from concurrent import futures
 
-from config import PAGE_URLS
-from scraper import download_single_page, timer
+from scrapers.config import PAGE_URLS
+from scrapers.scraper import download_single_page
+from scrapers.utils import timer
 
 
 @timer
