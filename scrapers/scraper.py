@@ -25,8 +25,8 @@ def save_pdf(pdf, file_name):
         path += '/月报'
     else:
         return
-    
     path = os.path.join(DEST_DIR + path, file_name + '.pdf')
+    
     with open(path, 'wb') as fp:
         fp.write(pdf)
  
@@ -45,8 +45,6 @@ def get_pdf_links_and_names(url):
     pdf_links_and_names = [(BASE_URL + tag['href'].lstrip('.'), tag.text)
                            for tag in tags if is_pdf_tag(tag)]
     return pdf_links_and_names
-
-
 
 
 def download_single_page(page_url):
