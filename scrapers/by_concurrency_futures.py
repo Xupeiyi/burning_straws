@@ -8,7 +8,7 @@ from scrapers.utils import timer
 @timer
 def download_many():
     with futures.ThreadPoolExecutor(30) as executor:
-        res = executor.map(download_single_page, list(PAGE_URLS()))
+        res = executor.map(download_single_page, list(PAGE_URLS())[0:10])
     print("All downloaded!")
     return len(list(res))
     

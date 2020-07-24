@@ -42,8 +42,7 @@ def is_target_pdf_tag(tag):
         return False
 
 
-def get_pdf_links_and_names(page_link):
-    html = get_content(page_link)
+def get_pdf_links_and_names(html):
     soup = BeautifulSoup(html, 'lxml')
     tags = soup.findAll('a')
     pdf_links_and_names = [(BASE_URL + tag['href'].lstrip('.'), tag.text)
@@ -52,7 +51,8 @@ def get_pdf_links_and_names(page_link):
 
 
 def download_single_page(page_link):
-    pdf_links_and_names = get_pdf_links_and_names(page_link)
+    html = get_content(page_link)
+    pdf_links_and_names = get_pdf_links_and_names(html)
     for pdf_link, pdf_name in pdf_links_and_names:
         pdf = get_content(pdf_link)
         path = gen_path(pdf_name)

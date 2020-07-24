@@ -6,6 +6,6 @@ def timer(f):
         t0 = time.time()
         count = f(*args, **kwargs)
         elapsed = time.time() - t0
-        msg = "\n{} pages downloaded in {:.2f}s"
+        msg = "\n downloaded {} in {:.2f}s"
         print(msg.format(count, elapsed))
     return decorated
