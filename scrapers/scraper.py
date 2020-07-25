@@ -57,6 +57,6 @@ def download_single_page(page_link):
         pdf = get_content(pdf_link)
         path = gen_path(pdf_name)
         save_pdf(pdf, path)
-    print(f"page {page_link} downloaded!")
-    
+    # print(f"page {page_link} downloaded!")
+    return page_link
 
