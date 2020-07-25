@@ -6,7 +6,7 @@ import aiofiles
 
 from scrapers.config import PAGE_URLS
 from scrapers.scraper import gen_path, get_pdf_links_and_names
-from scrapers.utils import timer
+from scrapers.utils import timer, spin
 
 
 async def get_content_async(url):
@@ -23,16 +23,20 @@ async def save_pdf_async(pdf, path):
 
 async def download_one_pdf(args):
     pdf_link, pdf_name = args
+    spinner = asyncio.ensure_future(spin(f'downloading: {pdf_name}'))
+    
     path = gen_path(pdf_name)
     pdf = await get_content_async(pdf_link)
     await save_pdf_async(pdf, path)
+    
+    spinner.cancel()
 
 
 @timer
 def download_many():
     loop = asyncio.get_event_loop()
     # get pdf_links from page_urls
-    htmls_to_do = [get_content_async(page_url) for page_url in PAGE_URLS()]
+    htmls_to_do = [get_content_async(page_url) for page_url in list(PAGE_URLS())[0:5]]
     htmls_wait_coro = asyncio.wait(htmls_to_do)
     htmls_res, _ = loop.run_until_complete(htmls_wait_coro)
     htmls = [r.result() for r in htmls_res]
