@@ -22,7 +22,7 @@ async def spin(msg):
         flush()
         write('\x08' * len(status))
         try:
-            await asyncio.sleep(.1)
+            await asyncio.sleep(0.1)
         except asyncio.CancelledError:
             break
     write(' ' * len(status) + '\x08' * len(status))
